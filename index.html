@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#151311" />
+    <meta name="description" content="用喜欢的歌曲，自然地学习韩语" />
+    <title>MUSE — 用歌曲学韩语</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="onboarding-view" id="onboardingView" aria-label="MUSE 开始设置">
+        <div class="onboarding-screen splash-screen is-active" id="splashScreen">
+          <div class="splash-orbit" aria-hidden="true"><span>♪</span><span>♫</span><span>·</span></div>
+          <div class="splash-brand"><span class="brand-mark" aria-hidden="true"></span><p class="eyebrow">MUSE</p></div>
+          <h1>用歌曲学习<br /><em>韩语</em></h1>
+          <p>从喜欢的歌开始<br />轻松、持续地学会表达</p>
+          <div class="splash-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="onboarding-screen welcome-screen" id="welcomeScreen" hidden>
+          <button class="skip-onboarding" id="skipOnboarding">跳过</button>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="welcome-record"></div>
+            <div class="welcome-lyric-card"><span class="eyebrow">NOW PLAYING</span><strong>REALLY REALLY</strong><small>WINNER · 韩语歌曲</small><div class="mini-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            <span class="floating-note note-one">♪</span><span class="floating-note note-two">♫</span>
+          </div>
+          <div class="welcome-copy"><p class="eyebrow">MUSIC × LANGUAGE</p><h1>用喜欢的歌，<br /><em>自然地学会韩语</em></h1><p>跟着歌词听，记住真实表达，再试着唱出来。</p></div>
+          <button class="primary-button onboarding-cta" id="startOnboarding">开始设置 <span>→</span></button>
+          <p class="onboarding-footnote">每天 5 分钟，一首歌就够了。</p>
+        </div>
+
+        <div class="onboarding-screen setup-screen" id="setupScreen" hidden>
+          <div class="setup-topline"><button class="back-button" id="setupBack" aria-label="上一步">←</button><div class="setup-progress" aria-label="设置进度"><span id="setupProgressBar"></span></div><button class="setup-close" id="setupSkip">跳过</button></div>
+          <div class="setup-step is-active" data-step="1"><p class="eyebrow">STEP 01 · 学习语言</p><h1>你想先学哪种<br /><em>语言？</em></h1><p class="setup-copy">第一阶段从韩语开始，之后会加入英语等更多语言。</p><div class="option-grid single-select" data-group="language"><button class="option-card selected" data-value="韩语"><span class="option-symbol">KR</span><span><strong>韩语</strong><small>通过韩语歌曲学习听力和表达</small></span><b>✓</b></button><button class="option-card is-disabled" data-value="英语"><span class="option-symbol">EN</span><span><strong>英语</strong><small>即将上线</small></span><b>＋</b></button><button class="option-card is-disabled" data-value="日语"><span class="option-symbol">JP</span><span><strong>日语</strong><small>即将上线</small></span><b>＋</b></button></div></div>
+          <div class="setup-step" data-step="2" hidden><p class="eyebrow">STEP 02 · 你的水平</p><h1>你现在的韩语<br /><em>基础怎么样？</em></h1><p class="setup-copy">我们会据此推荐合适的歌曲和学习速度。</p><div class="option-list single-select" data-group="level"><button class="option-card selected" data-value="A1"><span class="level-tag">A1</span><span><strong>刚开始接触韩语</strong><small>从熟悉旋律和基础词汇开始</small></span><b>✓</b></button><button class="option-card" data-value="A2"><span class="level-tag">A2</span><span><strong>会读一些韩文</strong><small>可以理解简单句子</small></span><b>○</b></button><button class="option-card" data-value="B1"><span class="level-tag">B1</span><span><strong>能进行简单交流</strong><small>想掌握更自然的表达</small></span><b>○</b></button><button class="option-card" data-value="B2"><span class="level-tag">B2</span><span><strong>想听懂无字幕歌词</strong><small>挑战更快的语速和俚语</small></span><b>○</b></button></div></div>
+          <div class="setup-step" data-step="3" hidden><p class="eyebrow">STEP 03 · 音乐偏好</p><h1>你平时喜欢听<br /><em>什么音乐？</em></h1><p class="setup-copy">选几个喜欢的类型，首页会优先推荐。</p><div class="tag-grid multi-select" data-group="genre"><button class="taste-tag selected" data-value="K-POP">K-POP</button><button class="taste-tag" data-value="抒情">抒情</button><button class="taste-tag" data-value="嘻哈">嘻哈</button><button class="taste-tag" data-value="独立音乐">独立音乐</button><button class="taste-tag" data-value="OST">影视原声</button><button class="taste-tag" data-value="复古">复古</button></div></div>
+          <div class="setup-step" data-step="4" hidden><p class="eyebrow">STEP 04 · 学习目标</p><h1>你最想先提升<br /><em>哪一项？</em></h1><p class="setup-copy">选一个最重要的目标，之后也可以随时调整。</p><div class="option-list single-select" data-group="goal"><button class="option-card selected" data-value="听力"><span class="goal-icon">◒</span><span><strong>听力</strong><small>不看字幕也能听懂歌词</small></span><b>✓</b></button><button class="option-card" data-value="口语"><span class="goal-icon">◌</span><span><strong>口语</strong><small>把歌曲里的表达用到日常对话</small></span><b>○</b></button><button class="option-card" data-value="发音"><span class="goal-icon">↗</span><span><strong>发音</strong><small>跟着歌手唱得更准确</small></span><b>○</b></button></div></div>
+          <button class="primary-button setup-next" id="setupNext">下一步 <span>→</span></button>
+        </div>
+      </section>
+
+      <header class="topbar" id="globalTopbar">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <p class="eyebrow">MUSE</p>
+            <h1>用歌曲学韩语</h1>
+          </div>
+        </div>
+        <button class="icon-button" id="profileButton" aria-label="打开个人资料">林</button>
+      </header>
+
+      <div id="homeView">
+      <section class="hero-block">
+        <div>
+          <p class="eyebrow">今天的 5 分钟</p>
+          <h2>让喜欢的歌，<br /><em>变成会说的话。</em></h2>
+          <p class="hero-copy">从熟悉的旋律开始，听懂一句，记住一个韩语表达。</p>
+        </div>
+        <div class="streak-badge" aria-label="连续学习 6 天">
+          <span class="streak-number">06</span>
+          <span class="streak-label">连续学习<br />天</span>
+        </div>
+      </section>
+
+      <section class="now-card" aria-label="正在学习的歌曲">
+        <div class="album-art large-art" id="heroArt" role="img" aria-label="歌曲封面"></div>
+        <div class="now-info">
+        <div class="chip-row"><span class="chip accent-chip">进行中</span><span class="chip">B1 · 中级</span></div>
+          <h3 id="heroSong">REALLY REALLY</h3>
+          <p id="heroArtist">WINNER · EVERYD4Y</p>
+          <div class="progress-line"><span id="heroProgress"></span></div>
+          <div class="time-row"><span id="currentTime">00:00</span><span id="durationTime">03:24</span></div>
+        </div>
+        <button class="play-button" id="heroPlay" aria-label="播放或暂停">▶</button>
+        <button class="learn-now-button" id="openLesson">打开歌词学习 <span>↗</span></button>
+      </section>
+
+      <section class="section-heading">
+        <div>
+          <p class="eyebrow">我的歌单</p>
+          <h3>今天想听哪一首？</h3>
+        </div>
+        <button class="text-button" id="importButton">导入歌单 <span>＋</span></button>
+      </section>
+
+      <section class="playlist" id="playlist" aria-label="歌曲列表">
+        <button class="song-row active" data-song="REALLY REALLY" data-artist="WINNER · EVERYD4Y" data-time="00:00" data-progress="0" data-art="yellow">
+          <span class="track-number">01</span>
+          <span class="album-art small-art art-yellow"></span>
+          <span class="song-copy"><strong>REALLY REALLY</strong><small>WINNER</small></span>
+          <span class="song-level">B1</span>
+          <span class="more-button">•••</span>
+        </button>
+        <button class="song-row" data-song="Ditto" data-artist="NewJeans · OMG" data-time="00:42" data-progress="18" data-art="lemon">
+          <span class="track-number">02</span>
+          <span class="album-art small-art art-lemon"></span>
+          <span class="song-copy"><strong>Ditto</strong><small>NewJeans</small></span>
+          <span class="song-level">A2</span>
+          <span class="more-button">•••</span>
+        </button>
+        <button class="song-row" data-song="Love Lee" data-artist="AKMU · LOVE EPISODE" data-time="02:06" data-progress="56" data-art="vienna">
+          <span class="track-number">03</span>
+          <span class="album-art small-art art-vienna"></span>
+          <span class="song-copy"><strong>Love Lee</strong><small>AKMU</small></span>
+          <span class="song-level">B2</span>
+          <span class="more-button">•••</span>
+        </button>
+      </section>
+
+      <nav class="bottom-nav" aria-label="主导航">
+        <button class="nav-item active" data-tab="home"><span class="nav-glyph">⌂</span><span>首页</span></button>
+        <button class="nav-item" data-tab="library"><span class="nav-glyph">◫</span><span>歌单</span></button>
+        <button class="nav-item" data-tab="words"><span class="nav-glyph">文</span><span>生词</span><span class="nav-count">12</span></button>
+        <button class="nav-item" data-tab="me"><span class="nav-glyph">○</span><span>我的</span></button>
+      </nav>
+      </div>
+
+      <section class="learning-view" id="learningView" hidden aria-label="歌词学习">
+        <header class="learning-header">
+          <button class="back-button" id="backHome" aria-label="返回首页">←</button>
+          <div class="learning-title"><p class="eyebrow">逐句学习</p><h2 id="learningSong">REALLY REALLY</h2></div>
+          <button class="icon-button" id="saveSong" aria-label="收藏歌曲">♡</button>
+        </header>
+        <div class="learning-meta"><span id="learningArtist">WINNER</span><span id="lineCounter">第 1 句</span><span>本地音频</span></div>
+        <div class="lesson-progress"><span></span></div>
+        <div class="lyric-stage">
+          <div class="lyric-topline"><span class="chip accent-chip">现在学习</span><button class="speed-button" id="slowButton">0.75× 慢速</button></div>
+          <button class="lyric-previous" id="lyricPrevious" type="button" aria-label="跳转到上一句">准备播放歌词</button>
+          <article class="lyric-focus">
+            <p class="lyric-english is-syncing" id="lyricCurrent">点击播放，开始同步歌词</p>
+            <p class="lyric-translation" id="lyricTranslation">点击下方播放按钮，查看这句的中文意思</p>
+            <button class="listen-line" id="listenLine"><span>▶</span> 听这一句</button>
+          </article>
+          <button class="lyric-next" id="lyricNext" type="button" aria-label="跳转到下一句">下一句会显示在这里</button>
+        </div>
+        <div class="word-panel">
+          <div class="word-panel-head"><span class="eyebrow">句中词汇</span><span>点击单词查看</span></div>
+          <div class="word-list">
+            <button class="word-detail" data-word="yellow"><strong>yellow</strong><span>/ˈjel.oʊ/ · 黄色的</span><small>yellow light · 温柔的光</small><i class="word-play" aria-hidden="true">▶</i></button>
+            <button class="word-detail" data-word="wonderful"><strong>wonderful</strong><span>/ˈwʌn.də.fəl/ · 美妙的</span><small>a wonderful day · 美好的一天</small><i class="word-play" aria-hidden="true">▶</i></button>
+          </div>
+        </div>
+        <div class="learning-footer">
+          <button class="footer-control" id="prevLine">上一句</button>
+          <button class="big-listen" id="playLesson" aria-label="播放当前句">▶</button>
+          <button class="footer-control" id="nextLine">下一句</button>
+        </div>
+      </section>
+
+      <section class="calendar-view" id="calendarView" hidden aria-label="学习日历">
+        <header class="calendar-header"><button class="back-button" id="backCalendar" aria-label="返回首页">←</button><div><p class="eyebrow">学习记录</p><h2>我的学习日历</h2></div><button class="icon-button" id="calendarToday" aria-label="回到今天">今</button></header>
+        <section class="calendar-summary"><div><p class="eyebrow">本月学习</p><strong id="monthMinutes">128<span> 分钟</span></strong></div><div class="summary-stat"><span id="monthDays">12</span><small>学习天数</small></div><div class="summary-stat"><span id="monthSongs">08</span><small>完成歌曲</small></div></section>
+        <section class="calendar-card"><div class="month-row"><button class="month-arrow" id="prevMonth" aria-label="上个月">‹</button><h3 id="monthLabel">2026年9月</h3><button class="month-arrow" id="nextMonth" aria-label="下个月">›</button></div><div class="weekday-row"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="calendar-grid" id="calendarGrid"></div><div class="heat-legend"><span>少</span><i class="heat-cell heat-0"></i><i class="heat-cell heat-1"></i><i class="heat-cell heat-2"></i><i class="heat-cell heat-3"></i><i class="heat-cell heat-4"></i><span>多</span></div></section>
+        <section class="day-detail" id="dayDetail"><div><p class="eyebrow" id="selectedDateLabel">今天 · 9月6日</p><h3 id="selectedDayTitle">今天也学一首歌</h3><p id="selectedDayCopy">学习记录会显示在这里</p></div><div class="day-minutes"><strong id="selectedMinutes">18</strong><span>分钟</span></div></section>
+        <section class="calendar-insight"><span class="insight-mark">✦</span><p><strong>保持这个节奏</strong><br /><span>连续学习 6 天，距离本周目标还差 2 天。</span></p><button id="calendarStart">继续学习 →</button></section>
+      </section>
+    </main>
+
+    <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+    <section class="import-sheet" id="importSheet" aria-modal="true" role="dialog" aria-labelledby="importTitle" hidden>
+      <div class="sheet-handle"></div>
+      <p class="eyebrow">导入歌单</p>
+      <h2 id="importTitle">把你的歌单带进来</h2>
+      <p class="sheet-copy">粘贴歌单链接，先导入歌曲信息，再挑选适合学习的句子。</p>
+      <label class="input-label" for="playlistInput">歌单链接</label>
+      <div class="input-wrap"><input id="playlistInput" type="url" placeholder="输入歌单链接或 ID" /><span>⌘</span></div>
+      <p class="input-hint" id="inputHint">支持 Spotify、YouTube Music 或其他歌单链接。</p>
+      <button class="primary-button" id="confirmImport">开始导入</button>
+      <button class="cancel-button" id="cancelImport">下次再说</button>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
