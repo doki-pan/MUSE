@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
+import '../services/audio_service.dart';
 import '../models/song.dart';
 import '../models/lyric_line.dart';
 import '../models/line_analysis.dart';
 import '../widgets/lyric_display.dart';
 import '../widgets/audio_controls.dart';
 import '../widgets/analysis_section.dart';
+import '../config/api_config.dart';
 
 class LearningScreen extends StatefulWidget {
   final Song song;
@@ -26,10 +28,19 @@ class _LearningScreenState extends State<LearningScreen> {
   bool _isPlaying = false;
   double _playbackSpeed = 1.0;
 
+  final AudioService _audioService = AudioService();
+  bool _audioInitialized = false;
+
   @override
   void initState() {
     super.initState();
     _loadSongDetail();
+  }
+
+  @override
+  void dispose() {
+    _audioService.stop();
+    super.dispose();
   }
 
   Future<void> _loadSongDetail() async {
@@ -46,11 +57,72 @@ class _LearningScreenState extends State<LearningScreen> {
         _analyses = data['analyses'] as List<LineAnalysis>;
         _isLoading = false;
       });
+
+      // 初始化音频
+      if (widget.song.audioUrl != null && widget.song.audioUrl!.isNotEmpty) {
+        await _initAudio();
+      }
     } catch (e) {
       setState(() {
         _error = e.toString();
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _initAudio() async {
+    try {
+      // 构建完整的音频URL
+      final audioUrl = '${ApiConfig.baseUrl.replaceAll('/api', '')}${widget.song.audioUrl}';
+      print('Loading audio from: $audioUrl');
+
+      await _audioService.initAudio(audioUrl);
+
+      setState(() {
+        _audioInitialized = true;
+      });
+
+      // 监听播放状态
+      _audioService.onPlayerStateChanged.listen((state) {
+        if (mounted) {
+          setState(() {
+            _isPlaying = state.toString().contains('playing');
+          });
+        }
+      });
+
+      // 监听播放进度，自动跳转到对应歌词
+      _audioService.onPositionChanged.listen((position) {
+        if (mounted) {
+          _updateCurrentLineFromPosition(position);
+        }
+      });
+    } catch (e) {
+      print('Audio init error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('音频加载失败: $e')),
+        );
+      }
+    }
+  }
+
+  void _updateCurrentLineFromPosition(Duration position) {
+    final positionMs = position.inMilliseconds;
+
+    for (int i = 0; i < _lines.length; i++) {
+      final currentLine = _lines[i];
+      final nextLine = i < _lines.length - 1 ? _lines[i + 1] : null;
+
+      if (positionMs >= currentLine.startTimeMs &&
+          (nextLine == null || positionMs < nextLine.startTimeMs)) {
+        if (_currentLineIndex != i) {
+          setState(() {
+            _currentLineIndex = i;
+          });
+        }
+        break;
+      }
     }
   }
 
@@ -63,25 +135,42 @@ class _LearningScreenState extends State<LearningScreen> {
   void _previousLine() {
     if (_currentLineIndex > 0) {
       setState(() => _currentLineIndex--);
+      _seekToCurrentLine();
     }
   }
 
   void _nextLine() {
     if (_currentLineIndex < _lines.length - 1) {
       setState(() => _currentLineIndex++);
+      _seekToCurrentLine();
     }
   }
 
-  void _togglePlayback() {
-    setState(() => _isPlaying = !_isPlaying);
-    // TODO: 实际的音频播放控制
+  Future<void> _seekToCurrentLine() async {
+    if (!_audioInitialized || _currentLineIndex >= _lines.length) return;
+
+    final currentLine = _lines[_currentLineIndex];
+    final position = Duration(milliseconds: currentLine.startTimeMs);
+    await _audioService.playFromPosition(position);
+    setState(() => _isPlaying = true);
   }
 
-  void _toggleSpeed() {
-    setState(() {
-      _playbackSpeed = _playbackSpeed == 1.0 ? 0.75 : 1.0;
-    });
-    // TODO: 更新音频播放速度
+  Future<void> _togglePlayback() async {
+    if (!_audioInitialized) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('音频未加载')),
+      );
+      return;
+    }
+
+    await _audioService.togglePlayPause();
+    setState(() => _isPlaying = !_isPlaying);
+  }
+
+  Future<void> _toggleSpeed() async {
+    final newSpeed = _playbackSpeed == 1.0 ? 0.75 : 1.0;
+    await _audioService.setPlaybackSpeed(newSpeed);
+    setState(() => _playbackSpeed = newSpeed);
   }
 
   @override
