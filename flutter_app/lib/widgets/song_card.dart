@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/song.dart';
+import '../screens/learning_screen.dart';
 
 class SongCard extends StatelessWidget {
   final Song song;
@@ -16,9 +17,11 @@ class SongCard extends StatelessWidget {
       child: InkWell(
         onTap: hasAudio
             ? () {
-                // TODO: 导航到学习页面
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('开始学习《${song.title}》')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LearningScreen(song: song),
+                  ),
                 );
               }
             : null,
