@@ -1,0 +1,39 @@
+name: muse
+description: 音乐学语言App - 通过K-POP学习韩语
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP客户端
+  http: ^1.1.0
+
+  # 状态管理
+  provider: ^6.1.1
+
+  # 音频播放
+  audioplayers: ^5.2.1
+
+  # 本地存储
+  shared_preferences: ^2.2.2
+
+  # 图标
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/audio/
+    - assets/images/
